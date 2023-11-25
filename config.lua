@@ -6,6 +6,27 @@
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 
+
+-- Keybinds
+-- Buffer keybinds
+lvim.keys.normal_mode["<S-x>"] = ":BufferKill<CR>"
+lvim.keys.normal_mode["<S-Left>"] = ":BufferLineCyclePrev<CR>"
+lvim.keys.normal_mode["<S-Right>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<C-Left>"] = ":BufferLineMovePrev<CR>"
+lvim.keys.normal_mode["<C-Right>"] = ":BufferLineMoveNext<CR>"
+
+
+function telescope_live_grep()
+  require("telescope.builtin").live_grep{
+    require("telescope.themes").get_cursor(),
+    layout_strategy = "horizontal",
+    layout_config = { preview_width = 0.7, height = 0.95, width = 0.9 }
+
+  }
+end
+
+ lvim.keys.normal_mode["<C-t>"] = telescope_live_grep
+
 lvim.plugins = {
     -- { "lunarvim/colorschemes" },
     -- {
@@ -46,7 +67,7 @@ lvim.plugins = {
         end,
     },
     {
-        "mrjones2014/nvim-ts-rainbow",
+        "HiPhish/nvim-ts-rainbow2",
     },
     {
         "romgrk/nvim-treesitter-context",
@@ -90,7 +111,7 @@ lvim.plugins = {
     {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
-        config = function() require "lsp_signature".on_attach() end,
+        config = function() require("lsp_signature").setup() end,
     },
     {
         "folke/todo-comments.nvim",
@@ -145,3 +166,4 @@ lvim.plugins = {
 
 -- Plugin configurations
 lvim.builtin.treesitter.rainbow.enable = true
+require('spectre').setup({ is_block_ui_break = true })
